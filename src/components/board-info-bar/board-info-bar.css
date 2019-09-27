@@ -1,0 +1,13 @@
+  /* ******* Board info bar ****** */
+  
+  .board-info-bar {
+    margin: 14px 0;
+    padding: 0 16px;
+    color: #f6f6f6;
+  }
+  
+  .board-info-bar h2 {
+    font-size: 20px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
