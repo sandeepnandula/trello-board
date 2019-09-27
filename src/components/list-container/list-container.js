@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import AddList from './add-list';
-import List from './list';
+import List from './list-view';
 
 
 const listContainer = ({ listIds }) => {
@@ -9,7 +9,7 @@ const listContainer = ({ listIds }) => {
         <section className="lists-container">
             {listIds.map((listId) => {
                 return (
-                    <List key={listId} id={listId} />
+                    <List key={listId} listId={listId} />
                 );
             })}
             <AddList />
