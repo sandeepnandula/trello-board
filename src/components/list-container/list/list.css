@@ -1,17 +1,10 @@
 /* ******* List-Containser ****** */
   
   
-.lists-container {
-    height: calc(100vh - 84px);
-    overflow: auto;
-    white-space: nowrap;
-    
-  }
-  
   .list {
     background-color: #e2e4e6;
       width: 272px;
-      margin: 0 8px;
+      margin: 0 0 0 10px;
       border-radius: 5px;
       display: inline-block;
       vertical-align: top;
@@ -40,14 +33,14 @@
     box-shadow: inset 0 0 0 2px #0079bf;
   }
   
-  .list-items {
+  .cards {
     padding: 0 6px 5px;
     overflow-y: auto;
     max-height: calc(100vh - 175px);
   }
   
   
-  .list-items li {
+  .cards li {
     font-size: 14px;
     font-weight: 400;
     line-height: 1.3;
@@ -63,11 +56,11 @@
     position: relative;
   }
   
-  .list-items li:last-of-type {
+  .cards li:last-of-type {
     margin-bottom: 0;
   }
   
-  .list-items li:hover {
+  .cards li:hover {
     background-color: #eee;
   }
   
@@ -122,7 +115,8 @@
     display: inline-block;
     vertical-align: top;
     width: 272px;
-    padding: 10px;
+    padding: 0;
+    margin: 0 10px;
   }
   .add-card-container textarea, .add-list-container textarea {
     list-style: none;
@@ -172,6 +166,9 @@
   }
   .add-list-container.open{
     background-color: #e2e4e6;
+    background-color: #e2e4e6;
+    padding: 10px;
+    border-radius: 5px;
   }
   .add-list-container.open a{
     display: none;
@@ -183,7 +180,7 @@
 /* Delete card and list */
 
   .delete-list, .delete-card {
-    background-image: url('../../assets/images/delete-icon.png');
+    background-image: url('../../../assets/images/delete-icon.png');
     width: 20px;
       position: absolute;
       height: 20px;

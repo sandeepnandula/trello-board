@@ -2,7 +2,7 @@ import React from 'react';
 
 const deleteCard = () => {
     return (
-        <span className="delete-list"></span>
+        <span className="delete-card"></span>
     );
 };
 

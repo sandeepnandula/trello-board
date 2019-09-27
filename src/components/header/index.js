@@ -1,4 +1,4 @@
-import Header from './header-view'
-import './header-view.css'
+import Header from './Header-container'
+import './header.css'
 
 export default Header;

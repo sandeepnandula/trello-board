@@ -1,10 +1,10 @@
 import React from 'react';
 
-const header = () => {
+const header = ({ title }) => {
     return (
         <header className="board-header">
             <div className="logo">
-                <a href='/'>Trello</a>
+                <a href='/'>{title}</a>
             </div>
         </header>
     );
