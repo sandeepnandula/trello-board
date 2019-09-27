@@ -93,6 +93,7 @@
     width: 272px;
     padding: 0;
     margin: 0 10px;
+    transition: all 0.1s linear;
   }
   .add-card-container textarea, .add-list-container textarea {
     list-style: none;
