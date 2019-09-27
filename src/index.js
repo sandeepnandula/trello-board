@@ -1,9 +1,10 @@
 import React from 'react';
 import { render } from 'react-dom';
-import './index.css';
-import App from './App';
 import configureStore from './configureStore'
 import { Provider } from 'react-redux';
+import App from './components/app/app'
+import './index.css';
+
 
 const store = configureStore();
 
