@@ -1,3 +1,3 @@
-import AddList from './add-list-view'
+import AddList from './add-list-container'
 
 export default AddList;

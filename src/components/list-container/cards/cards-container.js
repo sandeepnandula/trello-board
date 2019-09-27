@@ -1,22 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { getCardsByListId } from '../../../selectors/list-selector'
 import AddCard from './add-card';
-import DeleteCard from './delete-card';
+import CardList from './card-list';
 
-const Cards = ({ listId }) => {
+const Cards = ({ listId, cardsIds }) => {
+    const [showAddCardOption, setShowAddCardOption] = useState(false)
     return (
         <React.Fragment>
             <ul className="cards">
-                <li>Complete mock-up for client website<DeleteCard /></li>
-                <li>Email mock-up to client for feedback</li>
-                <li>Update personal website header background image</li>
-                <li>Update personal website heading fonts</li>
-                <li>Add google map to personal website</li>
-                <li>Begin draft of CSS Grid article</li>
-                <AddCard />
+                {cardsIds.map(cardId => {
+                    return(<CardList key={cardId} cardId={cardId} listId={listId}/>)
+                })}
+                {showAddCardOption && <AddCard listId={listId} setShowAddCardOption={setShowAddCardOption} showAddCardOption={showAddCardOption} />}
             </ul>
-            <button className="add-card-btn btn">Add a card</button>
+            {!showAddCardOption && <button className="add-card-btn btn" onClick={() => setShowAddCardOption(!showAddCardOption)}>Add a card</button>}
         </React.Fragment>
     );
 };
+function mapStateToProps(state, { listId }) {
+    return {
+        cardsIds: getCardsByListId({ state, listId })
+    };
+}
 
-export default Cards;
+export default connect(mapStateToProps)(Cards);

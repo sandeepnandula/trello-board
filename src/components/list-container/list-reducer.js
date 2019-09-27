@@ -28,17 +28,56 @@ const list = {
     "list-1": {
         id: "list-1",
         title: "Sprint Backlog",
-        cards: ["card-1", "card-2", "card-3"] 
+        cards: {
+            "card-1": {
+                id: "card-1",
+                title: "testing story",
+                discription: "Testing discription",
+                comments: ["testing comments", "testing comments"]
+            },
+             "card-2": {
+                id: "card-2",
+                title: "testing story",
+                discription: "Testing discription",
+                comments: ["testing comments", "testing comments"]
+             },
+             "card-3": {
+                id: "card-3",
+                title: "testing story",
+                discription: "Testing discription",
+                comments: ["testing comments", "testing comments"]
+             }
+            }
     },
     "list-2": {
         id: "list-2",
         title: "Work In Progress",
-        cards: ["card-1", "card-2"]
+        cards: {
+            "card-2": {
+                id: "card-2",
+                title: "testing story",
+                discription: "Testing discription",
+                comments: ["testing comments", "testing comments"]
+             },
+             "card-3": {
+                id: "card-3",
+                title: "testing story",
+                discription: "Testing discription",
+                comments: ["testing comments", "testing comments"]
+             }
+            }
     },
     "list-3": {
         id: "list-3",
         title: "Done",
-        cards: ["card-1"]
+        cards: {
+            "card-3": {
+                id: "card-3",
+                title: "testing story",
+                discription: "Testing discription",
+                comments: ["testing comments", "testing comments"]
+             }
+            }
     }
 }
 

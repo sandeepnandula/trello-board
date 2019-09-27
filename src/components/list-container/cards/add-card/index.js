@@ -1,3 +1,3 @@
-import AddCard from './add-card-view'
+import AddCard from './add-card-container'
 
 export default AddCard;
