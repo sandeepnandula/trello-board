@@ -1,3 +1,4 @@
+import { TOGGLE_SHOW_CARD_DETAILS_MODEL } from './list-actions';
 // State structure of the list reducer
 /*
 Example:
@@ -32,22 +33,22 @@ const list = {
             "card-1": {
                 id: "card-1",
                 title: "testing story",
-                discription: "Testing discription",
+                description: "Testing description",
                 comments: ["testing comments", "testing comments"]
             },
-             "card-2": {
+            "card-2": {
                 id: "card-2",
                 title: "testing story",
-                discription: "Testing discription",
+                description: "Testing description",
                 comments: ["testing comments", "testing comments"]
-             },
-             "card-3": {
+            },
+            "card-3": {
                 id: "card-3",
                 title: "testing story",
-                discription: "Testing discription",
+                description: "Testing description",
                 comments: ["testing comments", "testing comments"]
-             }
             }
+        }
     },
     "list-2": {
         id: "list-2",
@@ -56,16 +57,16 @@ const list = {
             "card-2": {
                 id: "card-2",
                 title: "testing story",
-                discription: "Testing discription",
+                description: "Testing description",
                 comments: ["testing comments", "testing comments"]
-             },
-             "card-3": {
+            },
+            "card-3": {
                 id: "card-3",
                 title: "testing story",
-                discription: "Testing discription",
+                description: "Testing description",
                 comments: ["testing comments", "testing comments"]
-             }
             }
+        }
     },
     "list-3": {
         id: "list-3",
@@ -74,14 +75,14 @@ const list = {
             "card-3": {
                 id: "card-3",
                 title: "testing story",
-                discription: "Testing discription",
+                description: "Testing description",
                 comments: ["testing comments", "testing comments"]
-             }
             }
+        }
     }
 }
 
-const lists = (state={}, action) => {
+const lists = (state = {}, action) => {
     return list
     // switch (action.type) {
     //     case value:
@@ -93,12 +94,35 @@ const lists = (state={}, action) => {
     // }
 }
 
-const listIds = (state={}, action) => {
-    const listIds  = ["list-1", "list-2", "list-3"]
+const listIds = (state = {}, action) => {
+    const listIds = ["list-1", "list-2", "list-3"]
     return listIds
+};
+
+
+const showCardDetailsModel = (state = false, action) => {
+    switch (action.type) {
+        case TOGGLE_SHOW_CARD_DETAILS_MODEL:
+            return !state;
+        default:
+            return state;
+    }
+};
+
+const cardModelDetails = (state={}, action) => {
+    switch (action.type) {
+        case TOGGLE_SHOW_CARD_DETAILS_MODEL:
+            const { cardId, listId } = action;
+            if (cardId && listId) return { cardId, listId }
+            return {}
+        default:
+            return state;
+    }
 }
 
 export default {
     lists,
-    listIds
+    listIds,
+    showCardDetailsModel,
+    cardModelDetails
 }

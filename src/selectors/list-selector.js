@@ -43,3 +43,13 @@ export const getCardTitleByListAndCardId = createSelector(
     [getCardObjectById],
     (cardObject) => (cardObject['title'] || ''),
 );
+
+export const getCardDescriptionByListAndCardId = createSelector(
+    [getCardObjectById],
+    (cardObject) => (cardObject['description'] || ''),
+);
+
+export const getCardCommentsByListAndCardId = createSelector(
+    [getCardObjectById],
+    (cardObject) => (cardObject['comments'] || []),
+);
