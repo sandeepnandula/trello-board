@@ -2,8 +2,8 @@ import React from 'react';
 import './app.css';
 import Header from '../header';
 import BoardInfoBar from '../board-info-bar'
-import CardModel from '../card-model';
-import List from '../list';
+import CardModel from '../list-container/cards/card-model';
+import ListContainer from '../list-container';
 
 
 function app() {
@@ -12,7 +12,7 @@ function app() {
       <Header />
       <BoardInfoBar />
       <CardModel />
-      <List />
+      <ListContainer />
     </React.Fragment>
   );
 }

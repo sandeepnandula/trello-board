@@ -1,9 +1,9 @@
 import React from 'react';
 
-const deleteCard = () => {
+const deleteList = () => {
     return (
         <span className="delete-list"></span>
     );
 };
 
-export default deleteCard;
+export default deleteList;
