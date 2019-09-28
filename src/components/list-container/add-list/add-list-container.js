@@ -1,8 +1,22 @@
 
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import cx from 'classnames';
+import { addNewList } from '../list-actions';
 
-function addList() {
+
+
+const generateListId = (cards) => {
+    // const ids = Object.keys(cards);
+    // Math.random should be unique because of its seeding algorithm.
+    // Convert it to base 36 (numbers + letters), and grab the first 9 characters
+    // after the decimal.
+    const cardId = '_' + Math.random().toString(36).substr(2, 9);
+    return cardId;
+}
+
+function addList({ addNewList }) {
     const [showAddListOption, setShowAddListOption] = useState(false);
     const [newListTitle, setNewListTitle] = useState('');
     const className = cx("add-list-container", {
@@ -17,16 +31,27 @@ function addList() {
         setShowAddListOption(!showAddListOption);
         setNewListTitle('');
     }
+
+    const onAddList = () => {
+        addNewList({ listId: generateListId(), title: newListTitle });
+        onClickClose();
+    }
     return (
         <div className={className}>
             <a className="add-list-btn btn" onClick={() => setShowAddListOption(!showAddListOption)}>Add a list</a>
             <textarea placeholder="Enter a title for this list..." onChange={onTextAreaChangeHandler}></textarea>
             <div>
-                <button>Add List</button>
+                <button onClick={onAddList} >Add List</button>
                 <span onClick={onClickClose}>X</span>
             </div>
         </div>
     );
 }
 
-export default addList;
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        addNewList
+    }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(addList);

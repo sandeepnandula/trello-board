@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { getCardsByListId } from '../../../selectors/list-selector'
+import { getCardsByListId } from '../selectors/list-selector'
 import AddCard from './add-card';
 import CardList from './card-list';
 
