@@ -2,7 +2,7 @@ import React from 'react';
 
 import DeleteList from './delete-list';
 import Cards from './cards';
-import ListTitle from './list-title';
+import ListTitle from './title-input';
 
 const list = ({ listId }) => {
     return (

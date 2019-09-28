@@ -1,28 +1,9 @@
 import { createSelector } from 'reselect';
-
+import { getListObjectById, getCardObjectById } from './utils';
 
 // REf: https://medium.com/@parkerdan/react-reselect-and-redux-b34017f8194c
 
 
-
-/**
- * 
- * @param {object} state // current redux state object
- * @param {string} listId // Id of the list
- */
-const getListObjectById = ({ state, listId }) => {
-    const { lists } = state;
-    return lists[listId];
-}
-
-const getCardObjectById = ({ state, listId, cardId }) => {
-    const listObject = getListObjectById({ state, listId });
-    const cardObject = listObject['cards'];
-    if(cardObject) {
-        return cardObject[cardId]
-    }
-    return {}
-}
 export const getTitleByListId = createSelector(
     [getListObjectById],
     (listObject) => (listObject['title'] || '')
