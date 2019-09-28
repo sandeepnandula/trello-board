@@ -26,7 +26,7 @@ function cardModelContainer({ showCardDetailsModel, toggleShowCardDetailsModel, 
                         <button className="btn-save">Save</button>
                         <button className="btn-cancel">Save</button>
                         <ul>
-                            {comments.map(comment => <li>{comment}</li>)}
+                            {comments.map((comment, index) => <li key={index}>{comment}</li>)}
                             
                         </ul>
                     </div>
