@@ -11,7 +11,7 @@ function description({ description, cardId, listId, updateCardDescription }) {
     const onChangeDescriptionValue = ({ target: { value } }) => {
         setNewDescription(value)
     }
-    const updateNewDiscriptionToCard = () => {
+    const updateNewDescriptionToCard = () => {
         if (newDescription != description) {
             updateCardDescription({ description: newDescription, cardId, listId });
         }
@@ -24,7 +24,7 @@ function description({ description, cardId, listId, updateCardDescription }) {
                 defaultValue={description}
                 placeholder= 'Add a more detailed description'
                 onChange={onChangeDescriptionValue}
-                onBlur={updateNewDiscriptionToCard}
+                onBlur={updateNewDescriptionToCard}
             ></textarea>
             <button className="btn-save">Save</button>
         </div>
