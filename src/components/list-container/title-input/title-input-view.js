@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getTitleByListId, getCardTitleByListAndCardId } from '../selectors/list-selector';
 import { updateListTitle } from '../list-actions';
-import { updateCardTitle  } from '../cards/cards-actions';
+import { updateCardTitle } from '../cards/cards-actions';
 
 /**
  * 
@@ -13,7 +14,7 @@ import { updateCardTitle  } from '../cards/cards-actions';
 
  */
 const title = ({ title, listId, cardId, updateListTitle, updateCardTitle }) => {
-    const [ newTitle, setNewTitle ] = useState(title);
+    const [newTitle, setNewTitle] = useState(title);
 
     const onChangeInputValue = ({ target: { value } }) => {
         setNewTitle(value)
@@ -40,9 +41,23 @@ const title = ({ title, listId, cardId, updateListTitle, updateCardTitle }) => {
     );
 };
 
+title.propTypes = {
+    title: PropTypes.string,
+    listId: PropTypes.string,
+    cardId: PropTypes.string,
+    updateListTitle: PropTypes.func.isRequired,
+    updateCardTitle: PropTypes.func.isRequired,
+}
+
+title.defaultProps = {
+    title: '',
+    listId: '',
+    cardId: '',
+}
+
 function mapStateToProps(state, { listId, cardId }) {
     let title = ''
-    if(cardId) {
+    if (cardId) {
         title = getCardTitleByListAndCardId({ state, listId, cardId });
     } else {
         title = getTitleByListId({ state, listId });

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { connect } from 'react-redux';
 import AddList from './add-list';
@@ -62,7 +63,6 @@ const listContainer = ({ listIds, updateCardIndexWithInTheList, updateCardIndexT
                             <AddList />
                         </section>
                     )
-
                 }}
             </Droppable>
         </DragDropContext>
@@ -72,8 +72,14 @@ const listContainer = ({ listIds, updateCardIndexWithInTheList, updateCardIndexT
 
 
 listContainer.propTypes = {
-
+    listIds: PropTypes.any,
+    updateCardIndexWithInTheList: PropTypes.func.isRequired,
+    updateCardIndexToDifferentList: PropTypes.func.isRequired,
 };
+
+listContainer.defaultProps = {
+    listIds: []
+}
 
 function mapStateToProps(state) {
     return {
