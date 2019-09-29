@@ -12,7 +12,9 @@ export const getTitleByListId = createSelector(
 export const getCardIdsByListId = createSelector(
     [getListObjectById],
     (listObject) => {
-      return listObject['cardIds'] || [];
+        // TOBO:: Have to debug cardIds object issue
+        // Reason: Memorization is not working while list updation
+      return [...listObject['cardIds']];
     }
 )
 
