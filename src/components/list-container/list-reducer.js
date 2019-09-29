@@ -167,7 +167,6 @@ const list = (state = {}, action) => {
                 title: action.title || state.title,
             }
         case ADD_CARD:
-            // console.log(state, action)
             return {
                 ...state,
                 cardIds: [...state.cardIds, action.cardId],
@@ -200,13 +199,11 @@ const list = (state = {}, action) => {
              } else {
                  cardIds = [action.cardId]
              }
-            const s=  {
+            return {
                 ...state,
                 cardIds,
                 cards: cards(state.cards, { ...action, type: ADD_CARD }),
             }
-            console.log(s)
-            return s
         }
         case DELETE_CARD: {
             const { cardIds } = state;
@@ -265,7 +262,6 @@ const lists = (state = {}, action) => {
             /** STEP 1 */
             // Preserving the card detatils before deleting from source list
             const cardDetails = state[action.sourceListId]['cards'][action.cardId]
-            console.log(cardDetails)
             // Card is removed from the source list
             const updateState = {
                 ...state,
