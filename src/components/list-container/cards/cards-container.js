@@ -5,8 +5,10 @@ import { getCardIdsByListId } from '../selectors/list-selector'
 import AddCard from './add-card';
 import CardList from './card-list';
 
-const Cards = ({ listId, cardsIds, index }) => {
+const Cards = ({ listId, cardsIds }) => {
     const [showAddCardOption, setShowAddCardOption] = useState(false)
+    console.log('**********')
+    console.log(cardsIds)
     return (
         <React.Fragment >
                 <Droppable droppableId={listId} type="cards">
