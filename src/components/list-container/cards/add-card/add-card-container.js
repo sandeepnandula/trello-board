@@ -25,7 +25,9 @@ const addCard = ({ setShowAddCardOption, showAddCardOption, addNewCard, listId }
         setNewCardTitle('');
     }
     const onClickAddCard = () => {
-        addNewCard({ title: newCardTitle, listId, cardId: generateCardId() });
+        if(newCardTitle) {
+            addNewCard({ title: newCardTitle, listId, cardId: generateCardId() });
+        }
         onClickClose();
     }
     return (

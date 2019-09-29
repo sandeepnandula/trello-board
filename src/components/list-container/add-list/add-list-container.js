@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import cx from 'classnames';
@@ -19,9 +19,7 @@ const generateListId = (cards) => {
 function addList({ addNewList }) {
     const [showAddListOption, setShowAddListOption] = useState(false);
     const [newListTitle, setNewListTitle] = useState('');
-    const className = cx("add-list-container", {
-        open: showAddListOption,
-    })
+    const inputTextArea = useRef(null);
 
     const onTextAreaChangeHandler = ({ target }) => {
         const { value } = target;
@@ -32,14 +30,37 @@ function addList({ addNewList }) {
         setNewListTitle('');
     }
 
+    const emptyCurrentTextArea = () => {
+        const { current } = inputTextArea
+        if (current) return (current.value = '')
+    }
     const onAddList = () => {
-        addNewList({ listId: generateListId(), title: newListTitle });
+        if (newListTitle) {
+            addNewList({ listId: generateListId(), title: newListTitle });
+        }
+        emptyCurrentTextArea();
         onClickClose();
     }
+
+    const onTextAreaKeyPress = ({ which }) => {
+        if(which == 13) {
+            onAddList();
+        }
+    }
+
+    const className = cx("add-list-container", {
+        open: showAddListOption,
+    })
+    
     return (
         <div className={className}>
             <a className="add-list-btn btn" onClick={() => setShowAddListOption(!showAddListOption)}>Add a list</a>
-            <textarea placeholder="Enter a title for this list..." onChange={onTextAreaChangeHandler}></textarea>
+            <textarea
+                ref={inputTextArea}
+                onKeyPress={onTextAreaKeyPress}
+                placeholder="Enter a title for this list..."
+                onChange={onTextAreaChangeHandler}
+            ></textarea>
             <div>
                 <button onClick={onAddList} >Add List</button>
                 <span onClick={onClickClose}>X</span>

@@ -11,9 +11,9 @@ import {
     UPDATE_CARD_TITLE,
     UPDATE_CARD_DESCRIPTION,
     ADD_COMMENTS_TO_CARD,
+    UPDATE_CARD_INDEX_WITH_IN_LIST,
+    UPDATE_CARD_INDEX_TO_DIFFERENT_LIST,
 } from './cards/cards-actions';
-
-import { CARD_ID } from '../../constants';
 
 // State structure of the list reducer
 /*
@@ -22,29 +22,11 @@ Example:
     Each of the list is containing some story cards
 
 
-    list = {
-        list-1: {
-            id: "list-1"
-            title: "Sprint Backlog"
-            cards: ["card-1", "card-2", "card-3"] // Id's of the cards
-        }
-        list-2: {
-            id: "list-2"
-            title: "Sprint Backlog"
-            cards: ["card-1", "card-2"]
-        }
-        list-3: {
-            id: "list-3"
-            title: "Sprint Backlog"
-            cards: ["card-1"]
-        }
-    }
-*/
-
-const listDemo = {
+listDemo = {
     "list-1": {
         id: "list-1",
         title: "Sprint Backlog",
+        cardIds: ["card-1", "card-2", "card-3"],
         cards: {
             "card-1": {
                 id: "card-1",
@@ -69,6 +51,7 @@ const listDemo = {
     "list-2": {
         id: "list-2",
         title: "Work In Progress",
+        cardIds: ["card-2", "card-3"],
         cards: {
             "card-2": {
                 id: "card-2",
@@ -87,6 +70,7 @@ const listDemo = {
     "list-3": {
         id: "list-3",
         title: "Done",
+        cardIds: ["card-3"],
         cards: {
             "card-3": {
                 id: "card-3",
@@ -97,6 +81,7 @@ const listDemo = {
         }
     }
 }
+*/
 
 
 const comments = (state = [], action) => {
@@ -117,7 +102,9 @@ const card = (state = {}, action) => {
         case ADD_CARD:
             return {
                 id: action.cardId,
-                title: action.title
+                title: action.title || state.title,
+                description: action.description || state.description || '',
+                comments: comments((action.comments || state.comments), action),
             }
         case UPDATE_CARD_TITLE:
             return {
@@ -172,6 +159,7 @@ const list = (state = {}, action) => {
             return {
                 id: action.listId,
                 title: action.title,
+                cardIds: [],
             }
         case UPDATE_LIST_TITLE:
             return {
@@ -179,14 +167,64 @@ const list = (state = {}, action) => {
                 title: action.title || state.title,
             }
         case ADD_CARD:
+            // console.log(state, action)
+            return {
+                ...state,
+                cardIds: [...state.cardIds, action.cardId],
+                cards: cards(state.cards, action),
+            }
         case UPDATE_CARD_TITLE:
         case UPDATE_CARD_DESCRIPTION:
         case ADD_COMMENTS_TO_CARD:
-        case DELETE_CARD:
             return {
                 ...state,
                 cards: cards(state.cards, action),
             }
+        case UPDATE_CARD_INDEX_WITH_IN_LIST:
+            const { cardIds } = state;
+            [cardIds[action.sourceCardIndex], cardIds[action.destinationCardIndex]] = [cardIds[action.destinationCardIndex], cardIds[action.sourceCardIndex]]
+            return {
+                ...state,
+                [cardIds]: [...cardIds],
+                cards: cards(state.cards, action),
+            }
+        case UPDATE_CARD_INDEX_TO_DIFFERENT_LIST: {
+            let { cardIds } = state;
+            /**
+                 Here we are checking if ther is no cards in list add directly or else adding according
+                    to the index it has dropped.
+             */
+             if (cardIds.length) {
+                cardIds.splice(action.destinationCardIndex, 0, action.cardId);
+                cardIds.join();
+             } else {
+                 cardIds = [action.cardId]
+             }
+            const s=  {
+                ...state,
+                cardIds,
+                cards: cards(state.cards, { ...action, type: ADD_CARD }),
+            }
+            console.log(s)
+            return s
+        }
+        case DELETE_CARD: {
+            const { cardIds } = state;
+
+            const cardIndex = cardIds.indexOf(action.cardId);
+            if (cardIndex < 0) {
+                return {
+                    ...state,
+                    cards: cards(state.cards, action),
+                };
+            }
+            cardIds.splice(cardIndex, 1);
+            return {
+                ...state,
+                [cardIds]: [...cardIds],
+                cards: cards(state.cards, action),
+            }
+        }
         default:
             return state;
     }
@@ -194,10 +232,10 @@ const list = (state = {}, action) => {
 
 
 
-const lists = (state = listDemo, action) => {
+const lists = (state = {}, action) => {
     const { listId } = action;
     // If found there is listId in the event we wont make the update of store
-    if (!listId) return state
+    if (!listId && action.type != UPDATE_CARD_INDEX_TO_DIFFERENT_LIST) return state
 
     switch (action.type) {
         case ADD_LIST:
@@ -210,12 +248,36 @@ const lists = (state = listDemo, action) => {
         case UPDATE_CARD_TITLE:
         case UPDATE_CARD_DESCRIPTION:
         case ADD_COMMENTS_TO_CARD:
+        case UPDATE_CARD_INDEX_WITH_IN_LIST:
         case DELETE_CARD: {
             return {
                 ...state,
                 [listId]: list(state[listId], action),
             }
         }
+        case UPDATE_CARD_INDEX_TO_DIFFERENT_LIST: {
+            /*
+                        Date we are going to receive
+                        { cardId, sourceListId, destinationListId, sourceCardIndex, destinationCardIndex}            The updation are going in the following steps
+                            -- CARD details must be remove from the source list
+                            -- CARD details must be add into the new destination
+                     */
+            /** STEP 1 */
+            // Preserving the card detatils before deleting from source list
+            const cardDetails = state[action.sourceListId]['cards'][action.cardId]
+            console.log(cardDetails)
+            // Card is removed from the source list
+            const updateState = {
+                ...state,
+                [action.sourceListId]: list(state[action.sourceListId], { ...action, type: DELETE_CARD }),
+            }
+            // Updating the card details to new destination list
+            return {
+                ...updateState,
+                [action.destinationListId]: list(state[action.destinationListId], { ...action, ...cardDetails, type: UPDATE_CARD_INDEX_TO_DIFFERENT_LIST })
+            }
+        }
+
         case DELETE_LIST:
             const { [listId]: deleted, ...rest } = state;
             return rest;
@@ -223,9 +285,9 @@ const lists = (state = listDemo, action) => {
             return state;
     }
 }
-const listIdsDemo = ["list-1", "list-2", "list-3"]
+// const listIdsDemo = ["list-1", "list-2", "list-3"]
 
-const listIds = (state = listIdsDemo, action) => {
+const listIds = (state = [], action) => {
     switch (action.type) {
         case ADD_LIST:
             return [
@@ -246,6 +308,8 @@ const listIds = (state = listIdsDemo, action) => {
     }
 };
 
+
+/* ****** Card Model ******* */
 
 const showCardDetailsModel = (state = false, action) => {
     switch (action.type) {
