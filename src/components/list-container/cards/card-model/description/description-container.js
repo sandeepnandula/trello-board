@@ -11,14 +11,6 @@ function description({ description, cardId, listId, updateCardDescription }) {
     const onChangeDescriptionValue = ({ target: { value } }) => {
         setNewDescription(value)
     }
-    /**
-     * On user goes out of focus from the description input then only we 
-        are gonna update the description.
-     */
-     const onClickClose = (event) => {
-        event.stopPropagation();
-        setNewDescription(initialState);
-     }
     const updateNewDiscriptionToCard = () => {
         if (newDescription != description) {
             updateCardDescription({ description: newDescription, cardId, listId });
@@ -35,7 +27,6 @@ function description({ description, cardId, listId, updateCardDescription }) {
                 onBlur={updateNewDiscriptionToCard}
             ></textarea>
             <button className="btn-save">Save</button>
-            <button className="btn-cancel" onClick={onClickClose}>X</button>
         </div>
     );
 }
