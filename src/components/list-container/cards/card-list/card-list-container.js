@@ -3,12 +3,18 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toggleShowCardDetailsModel } from '../../list-actions';
 import DeleteCard from '../delete-card';
-import { getCardTitleByListAndCardId } from '../../../../selectors/list-selector'
+import { getCardTitleByListAndCardId } from '../../selectors/list-selector'
 
 
 function cardList({ cardTitle, toggleShowCardDetailsModel, cardId, listId }) {
+    const onClickList = () => {
+        toggleShowCardDetailsModel({ cardId, listId })
+    }
     return (
-        <li onClick={() => toggleShowCardDetailsModel({ cardId, listId })}>{cardTitle}<DeleteCard /></li>
+        <li onClick={onClickList}>
+            {cardTitle}
+            <DeleteCard cardId={cardId} listId={listId} />
+        </li>
     );
 }
 function mapStateToProps(state, { listId, cardId }) {
