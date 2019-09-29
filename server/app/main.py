@@ -1,6 +1,6 @@
 import datetime
 
-from flask import Flask, template_rendered
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
@@ -9,7 +9,8 @@ app = Flask(__name__)
 def root():
     # For the sake of example, use static information to inflate the template.
     # This will be replaced with real information in later steps.
-    return template_rendered('index.html')
+    # return template_rendered('index.html')
+    return render_template('index.html')
 
 
 if __name__ == '__main__':
