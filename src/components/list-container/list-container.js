@@ -3,10 +3,11 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { connect } from 'react-redux';
 import AddList from './add-list';
 import List from './list-view';
-
+import { updateCardIndexWithInTheList, updateCardIndexToDifferentList } from './cards/cards-actions';
+import { bindActionCreators } from 'redux';
 
 // const result = {
-//     draggableId: 'task-1',
+//     draggableId: 'row-1',
 //     type: 'TYPE',
 //     reason: 'DROP',
 //     source: {
@@ -19,15 +20,25 @@ import List from './list-view';
 //     },
 // }
 
-const listContainer = ({ listIds }) => {
+const listContainer = ({ listIds, updateCardIndexWithInTheList, updateCardIndexToDifferentList }) => {
     const onDragEnd = (result) => {
-        console.log(result)
-        const { destination, source, draggableId } = result
+        const { destination, source, draggableId: cardId } = result
         // If there is no destination no need to update the states
         if (!destination) return  // User dropped it outside the containers
+        const { droppableId: sourceListId, index: sourceCardIndex } = source;
+        const { droppableId: destinationListId, index: destinationCardIndex } = destination
         // This is user dropped in the same position.
-        if (destination.droppableId == source.droppableId &&
-            destination.index === source.index) return
+        if ((sourceListId === destinationListId) && (sourceCardIndex === destinationCardIndex)) {
+            return
+        }
+        // If the both the list Id's are same means user dropped in the same list with different position
+        if (sourceListId === destinationListId) {
+            return updateCardIndexWithInTheList({ cardId, listId: sourceListId, sourceCardIndex, destinationCardIndex })
+        }
+        // If the user drops the card in the different list
+        if (sourceListId !== destinationListId) {
+            return updateCardIndexToDifferentList({ cardId, sourceListId, destinationListId, sourceCardIndex, destinationCardIndex })
+        }
     }
     return (
         <DragDropContext onDragEnd={onDragEnd} >
@@ -49,7 +60,6 @@ const listContainer = ({ listIds }) => {
                                 );
                             })}
                             <AddList />
-                            {provided.placeholder}
                         </section>
                     )
 
@@ -71,5 +81,12 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(listContainer);
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        updateCardIndexWithInTheList,
+        updateCardIndexToDifferentList,
+    }, dispatch)
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(listContainer);
 

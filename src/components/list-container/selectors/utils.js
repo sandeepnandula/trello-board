@@ -13,8 +13,8 @@ export const getListObjectById = ({ state, listId }) => {
 export const getCardObjectById = ({ state, listId, cardId }) => {
     const listObject = getListObjectById({ state, listId });
     const cardObject = listObject['cards'];
-    if(cardObject) {
-        return cardObject[cardId]
+    if(Object.keys(cardObject).length) {
+        return cardObject[cardId] || {}
     }
     return {}
 }

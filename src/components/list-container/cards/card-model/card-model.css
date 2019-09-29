@@ -100,7 +100,10 @@
     display: inline-block;
   }
   
-  .comments-section textarea:focus ~ button{
+  .comments-section.open textarea{
+    display: inline-block;
+  } 
+  .comments-section.open button{
     display: inline-block;
   } 
 

@@ -9,14 +9,10 @@ export const getTitleByListId = createSelector(
     (listObject) => (listObject['title'] || '')
 )
 
-export const getCardsByListId = createSelector(
+export const getCardIdsByListId = createSelector(
     [getListObjectById],
     (listObject) => {
-      const cardsDetails = listObject['cards'] || [];
-      if(cardsDetails) {
-          const cardsIds = Object.keys(cardsDetails)
-          return cardsIds
-      } return [];
+      return listObject['cardIds'] || [];
     }
 )
 

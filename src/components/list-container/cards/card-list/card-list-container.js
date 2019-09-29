@@ -18,7 +18,7 @@ function cardList({ cardTitle, toggleShowCardDetailsModel, cardId, listId, index
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                     ref={provided.innerRef}
-                    onClick={() => toggleShowCardDetailsModel({ cardId, listId })}>{cardTitle}
+                    onClick={onClickList}>{cardTitle}
                     <DeleteCard cardId={cardId} listId={listId} />
                 </li>
             )}
