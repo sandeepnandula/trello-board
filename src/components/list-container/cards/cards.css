@@ -1,5 +1,5 @@
 .cards {
-    padding: 0 6px 5px;
+    padding: 0 5px 10px;
     overflow-y: auto;
     max-height: calc(100vh - 175px);
   }

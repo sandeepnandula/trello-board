@@ -7,7 +7,7 @@ import ListTitle from './title-input';
 const list = ({ listId }) => {
     return (
         <div className="list">
-            <ListTitle listId={listId} />
+            <ListTitle listId={listId} /> 
             <DeleteList listId={listId}/>
             <Cards listId={listId}/>
         </div>
