@@ -10,6 +10,10 @@ export const getListObjectById = ({ state, listId }) => {
     return lists[listId] || {};
 }
 
+/**
+ * 
+ * @param {string} cardId // Id of the card
+ */
 export const getCardObjectById = ({ state, listId, cardId }) => {
     const listObject = getListObjectById({ state, listId });
     const cardObject = listObject['cards'];

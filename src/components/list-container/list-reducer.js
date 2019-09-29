@@ -83,6 +83,7 @@ listDemo = {
 }
 */
 
+/********* Card reducers ************ */
 
 const comments = (state = [], action) => {
     const { comment } = action
@@ -152,6 +153,8 @@ const cards = (state = {}, action) => {
             return state;
     }
 }
+
+/********* List reducers ************ */
 
 const list = (state = {}, action) => {
     switch (action.type) {
@@ -326,6 +329,8 @@ const cardModelDetails = (state = {}, action) => {
             return state;
     }
 }
+
+
 
 export default {
     lists,
