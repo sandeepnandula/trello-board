@@ -34,7 +34,7 @@ react-hooks: https://reactjs.org/docs/hooks-intro.html
 We used this for better coding practices (as they mentioned avoid class components for a small state dependency)
 
 
-### server-configuration references
+### `server-configuration` references
 
 GAE python3 standard:  https://cloud.google.com/appengine/docs/standard/python3/
 
@@ -42,4 +42,5 @@ Python virtual env:  https://docs.python-guide.org/dev/virtualenvs/
 
 web-frame work `flask`: https://palletsprojects.com/p/flask/
 
-
+### github branching methodology
+https://nvie.com/posts/a-successful-git-branching-model/
