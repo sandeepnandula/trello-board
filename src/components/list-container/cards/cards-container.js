@@ -7,8 +7,6 @@ import CardList from './card-list';
 
 const Cards = ({ listId, cardsIds }) => {
     const [showAddCardOption, setShowAddCardOption] = useState(false)
-    console.log('**********')
-    console.log(cardsIds)
     return (
         <React.Fragment >
                 <Droppable droppableId={listId} type="cards">
